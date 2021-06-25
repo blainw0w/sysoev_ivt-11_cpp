@@ -1,0 +1,171 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <iomanip>
+#include <iostream>
+using namespace std;
+
+struct book
+{
+	char* namebook = NULL;
+	char* name = NULL;
+	char* surname = NULL;
+	char* pubhouse = NULL;
+	int year = 0;
+};
+
+void sortalf(char** data, int lenD)
+{
+	int j = 0;
+	char* tmp = 0;
+	for (int i = 0; i < lenD; i++)
+	{
+		j = i;
+		for (int k = i; k < lenD; k++) {
+			if (strcmp(data[j], data[k]) > 0) {
+				j = k;
+			}
+		}
+		tmp = data[i];
+		data[i] = data[j];
+		data[j] = tmp;
+	}
+}
+
+void plusbook(book(*( &library)), int &N)
+{
+	N++;
+	char* b = new char[64];
+	char* e = new char[64];
+	char* d = new char[64];
+	char* c = new char[64];
+	int a = 0;
+	library = (book*)realloc(library, sizeof(book) * N);
+	cout << "Книга №" << N  << endl;
+	cout << "Название книги: "; cin >> b;
+	cout << "Имя писателя: "; cin >> c;
+	cout << "Фамилия писателя: "; cin >> d;
+	cout << "Издательство: "; cin >> e;
+	cout << "Год издания: "; cin >> a;
+	library[N-1] = { b, c, d, e, a };
+}
+
+void printbook(book* book, int N)
+{
+	cout << "--------------------------------------------" << endl << endl << "Вывод информации о книге в табличном виде: " << endl << endl;
+	cout << "Название книги: " << book[N].namebook << endl;
+	cout << "ФИ писателя: " << book[N].surname << " " << book[N].name << endl;
+	cout << "Издательство: " << book[N].pubhouse << ", " << book[N].year << " year" << endl;
+	cout << endl;
+}
+
+void authorsbooks(char* q, char* w, book* book, int N)
+{
+	int u = 0;
+	cout << endl << "Список книг автора: " << endl;
+	for (int i = 0; i < N; i++)
+	{
+		if (strcmp(q, book[i].surname) == 0 && strcmp(w, book[i].name) == 0) { u++; cout << u << ") " << book[i].namebook << endl; }
+	}
+	if (u == 0) cout << "Книг интересующего вас автора в библиотеке нет" << endl;
+}
+
+void pubhousewriters(char* m, book* book, int N)
+{
+	cout << "----------------------------------------------------------" << endl;
+	int u = 0;
+	char** surnames1 = new char* [N];
+	for (int i = 0; i < N; i++)
+	{
+		if (strcmp(m, book[i].pubhouse) == 0) { surnames1[i] = book[i].surname; u++; }
+		else surnames1[i] = NULL;
+	}
+	char** surnames2 = new char* [u]; int j = 0;
+	for (int i = 0; i < N; i++)
+	{
+		if (surnames1[i] == NULL) { j = j; }
+		else { surnames2[j] = surnames1[i]; j++; }
+	}
+	sortalf(surnames2, u);
+	if (u == 0) cout << "Писателей интересующего вас издательства в библиотеке нет" << endl;
+	else cout << endl << "Список фамилий писателей издательства: " << endl;
+	for (int i = 0; i < u; i++)
+	{
+		cout << i + 1 << ") " << surnames2[i] << endl;
+	}
+}
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int n, x = 0;
+	bool y = true;
+	cout << "Введите изначальное количество книг: "; cin >> n; cout << endl;
+	book* library = new book[n];		
+	for (int i = 0; i < n; i++)
+	{
+		char* b = new char[64];
+		char* e = new char[64];
+		char* d = new char[64];
+		char* c = new char[64];		
+		int a = 0;
+		cout << "Книга №" << i + 1 << endl;
+		cout << "Название книги: "; cin >> b;
+		cout << "Имя писателя: "; cin >> c;
+		cout << "Фамилия писателя: "; cin >> d;
+		cout << "Издательство: "; cin >> e;
+		cout << "Год издания: "; cin >> a;
+		library[i] = { b, c, d, e, a };
+		cout << endl;
+	}
+	while (y == true)
+	{
+	cout << "----------------------------------------------------------" << endl;
+	cout << "Меню функций" << endl;		
+	cout << "----------------------------------------------------------" << endl;
+	cout << "Добавить новую книгу " << "                              ......1" << endl;
+	cout << "Распечатать информацию о книге в табличном виде " << "   ......2" << endl;
+	cout << "Найти все книги автора " << "                            ......3" << endl;
+	cout << "Найти всех авторов издательства " << "                   ......4" << endl;
+	cout << "Выход из программы " << "                           ...........5" << endl;
+	bool h;
+	int k = 0;
+	char* q = new char[64];
+	char* w = new char[64];
+	char* m = new char[64];
+	cout << "----------------------------------------------------------" << endl;
+	cout << endl << "Введите номер функции: "; cin >> x; cout << endl;
+		switch (x)
+		{
+		case 1:y = true; cout << "Выбрана функция добавления новой книги в библиотеку" << endl; plusbook(library, n); break;
+		case 2:y = true;
+			cout << "Выбрана функция печати информации о книге в табличном виде" << endl;
+			h = false;
+			while (h == false)
+			{
+				cout << "Введите номер интересующей вас книги: "; cin >> k; k--;
+				if (k < 0 || k > n) cout << endl << "Ошибка. Некорректный номер книги" << endl;
+				else h = true;
+			}
+			printbook(library, k); break;
+		case 3:y = true;
+			cout << "Выбрана функция печати списка книг заданного автора" << endl;			
+			cout << "Введите фамилию интересующего вас автора: "; cin >> q;
+			cout << "Введите имя интересующего вас автора: "; cin >> w;
+			authorsbooks(q, w, library, n);
+			delete[] q;
+			delete[] w;
+			break;
+		case 4:y = true;
+			cout << "Выбрана функция печати списка писателей заданного издательства" << endl;
+			cout << "Введите название интересующего вас издательства: "; cin >> m;
+			pubhousewriters(m, library, n); cout << endl;
+			delete[] m;
+			break;
+		case 5:y = false; cout << "Программа завершила свою работу" << endl; break;
+		default: cout << "Ошибка. Некорректный номер функции" << endl; true;
+		}
+	}
+	return 0;
+}

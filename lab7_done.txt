@@ -1,0 +1,491 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <ctime>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <iomanip>
+#include <iostream>
+#include <Windows.h>
+#include <fstream>
+using namespace std;
+
+struct dataofbirth
+{
+	int day;
+	char* month;
+	int yearofbirth;
+};
+
+struct fio
+{
+	char* name;
+	char* surname;
+	char* patronymic;
+};
+
+struct book
+{
+	char* namebook;
+	char* pubhouse;
+	int publicyear;
+	dataofbirth date;
+	fio writer;
+};
+
+void pensionableage(book* book, int N)
+{
+	time_t now = time(NULL);
+	tm* ltm = localtime(&now);
+	int year = 1900 + ltm->tm_year;
+	int month = 1 + ltm->tm_mon;
+	int day = ltm->tm_mday;
+	int numberofmonth = 0, kol = 0;
+	for (int i = 0; i < N; i++)
+	{
+		if (strcmp(book[i].date.month, "January") == 0 || strcmp(book[i].date.month, "january") == 0) numberofmonth = 1;
+		if (strcmp(book[i].date.month, "February") == 0 || strcmp(book[i].date.month, "february") == 0) numberofmonth = 2;
+		if (strcmp(book[i].date.month, "March") == 0 || strcmp(book[i].date.month, "march") == 0) numberofmonth = 3;
+		if (strcmp(book[i].date.month, "April") == 0 || strcmp(book[i].date.month, "april") == 0) numberofmonth = 4;
+		if (strcmp(book[i].date.month, "May") == 0 || strcmp(book[i].date.month, "may") == 0) numberofmonth = 5;
+		if (strcmp(book[i].date.month, "June") == 0 || strcmp(book[i].date.month, "june") == 0) numberofmonth = 6;
+		if (strcmp(book[i].date.month, "July") == 0 || strcmp(book[i].date.month, "july") == 0) numberofmonth = 7;
+		if (strcmp(book[i].date.month, "August") == 0 || strcmp(book[i].date.month, "august") == 0) numberofmonth = 8;
+		if (strcmp(book[i].date.month, "September") == 0 || strcmp(book[i].date.month, "september") == 0) numberofmonth = 9;
+		if (strcmp(book[i].date.month, "October") == 0 || strcmp(book[i].date.month, "october") == 0) numberofmonth = 10;
+		if (strcmp(book[i].date.month, "November") == 0 || strcmp(book[i].date.month, "november") == 0) numberofmonth = 11;
+		if (strcmp(book[i].date.month, "December") == 0 || strcmp(book[i].date.month, "december") == 0) numberofmonth = 12;
+
+		if (strcmp(book[i].date.month, "Январь") == 0 || strcmp(book[i].date.month, "январь") == 0) numberofmonth = 1;
+		if (strcmp(book[i].date.month, "Февраль") == 0 || strcmp(book[i].date.month, "февраль") == 0) numberofmonth = 2;
+		if (strcmp(book[i].date.month, "Март") == 0 || strcmp(book[i].date.month, "март") == 0) numberofmonth = 3;
+		if (strcmp(book[i].date.month, "Апрель") == 0 || strcmp(book[i].date.month, "апрель") == 0) numberofmonth = 4;
+		if (strcmp(book[i].date.month, "Май") == 0 || strcmp(book[i].date.month, "май") == 0) numberofmonth = 5;
+		if (strcmp(book[i].date.month, "Июнь") == 0 || strcmp(book[i].date.month, "июнь") == 0) numberofmonth = 6;
+		if (strcmp(book[i].date.month, "Июль") == 0 || strcmp(book[i].date.month, "июль") == 0) numberofmonth = 7;
+		if (strcmp(book[i].date.month, "Август") == 0 || strcmp(book[i].date.month, "август") == 0) numberofmonth = 8;
+		if (strcmp(book[i].date.month, "Сентябрь") == 0 || strcmp(book[i].date.month, "сентябрь") == 0) numberofmonth = 9;
+		if (strcmp(book[i].date.month, "Октябрь") == 0 || strcmp(book[i].date.month, "октябрь") == 0) numberofmonth = 10;
+		if (strcmp(book[i].date.month, "Ноябрь") == 0 || strcmp(book[i].date.month, "ноябрь") == 0) numberofmonth = 11;
+		if (strcmp(book[i].date.month, "Декабрь") == 0 || strcmp(book[i].date.month, "декабрь") == 0) numberofmonth = 12;
+
+		if ((year - book[i].date.yearofbirth) > 65) { kol++; }
+		if ((year - book[i].date.yearofbirth) == 65) { if (numberofmonth < month) { kol++; } }
+		if ((year - book[i].date.yearofbirth) == 65) { if (numberofmonth == month) { if (book[i].date.day <= day) { kol++; } } }
+	}
+	if (kol == 0) cout << "Произведений писателей пенсионного возраста в библиотеке нет " << endl;
+	else
+	{
+		kol = 0;
+		cout << "----------------------------------------------------------" << endl;
+		cout << endl << "Список фамилий писателей пенсионного возраста: " << endl;
+		for (int i = 0; i < N; i++)
+		{
+			if (strcmp(book[i].date.month, "January") == 0 || strcmp(book[i].date.month, "january") == 0) numberofmonth = 1;
+			if (strcmp(book[i].date.month, "February") == 0 || strcmp(book[i].date.month, "february") == 0) numberofmonth = 2;
+			if (strcmp(book[i].date.month, "March") == 0 || strcmp(book[i].date.month, "march") == 0) numberofmonth = 3;
+			if (strcmp(book[i].date.month, "April") == 0 || strcmp(book[i].date.month, "april") == 0) numberofmonth = 4;
+			if (strcmp(book[i].date.month, "May") == 0 || strcmp(book[i].date.month, "may") == 0) numberofmonth = 5;
+			if (strcmp(book[i].date.month, "June") == 0 || strcmp(book[i].date.month, "june") == 0) numberofmonth = 6;
+			if (strcmp(book[i].date.month, "July") == 0 || strcmp(book[i].date.month, "july") == 0) numberofmonth = 7;
+			if (strcmp(book[i].date.month, "August") == 0 || strcmp(book[i].date.month, "august") == 0) numberofmonth = 8;
+			if (strcmp(book[i].date.month, "September") == 0 || strcmp(book[i].date.month, "september") == 0) numberofmonth = 9;
+			if (strcmp(book[i].date.month, "October") == 0 || strcmp(book[i].date.month, "october") == 0) numberofmonth = 10;
+			if (strcmp(book[i].date.month, "November") == 0 || strcmp(book[i].date.month, "november") == 0) numberofmonth = 11;
+			if (strcmp(book[i].date.month, "December") == 0 || strcmp(book[i].date.month, "december") == 0) numberofmonth = 12;
+
+			if (strcmp(book[i].date.month, "Январь") == 0 || strcmp(book[i].date.month, "январь") == 0) numberofmonth = 1;
+			if (strcmp(book[i].date.month, "Февраль") == 0 || strcmp(book[i].date.month, "февраль") == 0) numberofmonth = 2;
+			if (strcmp(book[i].date.month, "Март") == 0 || strcmp(book[i].date.month, "март") == 0) numberofmonth = 3;
+			if (strcmp(book[i].date.month, "Апрель") == 0 || strcmp(book[i].date.month, "апрель") == 0) numberofmonth = 4;
+			if (strcmp(book[i].date.month, "Май") == 0 || strcmp(book[i].date.month, "май") == 0) numberofmonth = 5;
+			if (strcmp(book[i].date.month, "Июнь") == 0 || strcmp(book[i].date.month, "июнь") == 0) numberofmonth = 6;
+			if (strcmp(book[i].date.month, "Июль") == 0 || strcmp(book[i].date.month, "июль") == 0) numberofmonth = 7;
+			if (strcmp(book[i].date.month, "Август") == 0 || strcmp(book[i].date.month, "август") == 0) numberofmonth = 8;
+			if (strcmp(book[i].date.month, "Сентябрь") == 0 || strcmp(book[i].date.month, "сентябрь") == 0) numberofmonth = 9;
+			if (strcmp(book[i].date.month, "Октябрь") == 0 || strcmp(book[i].date.month, "октябрь") == 0) numberofmonth = 10;
+			if (strcmp(book[i].date.month, "Ноябрь") == 0 || strcmp(book[i].date.month, "ноябрь") == 0) numberofmonth = 11;
+			if (strcmp(book[i].date.month, "Декабрь") == 0 || strcmp(book[i].date.month, "декабрь") == 0) numberofmonth = 12;
+
+			if ((year - book[i].date.yearofbirth) > 65) { kol++; cout << kol << ")" << book[i].writer.surname << endl; }
+			if ((year - book[i].date.yearofbirth) == 65) { if (numberofmonth < month) { kol++; cout << kol << ")" << book[i].writer.surname << endl; } }
+			if ((year - book[i].date.yearofbirth) == 65) { if (numberofmonth == month) { if (book[i].date.day <= day) { kol++; cout << kol << ")" << book[i].writer.surname << endl; } } }
+		}
+	}
+}
+
+void sortalfavit(char** temp, int lenD)
+{
+	int j = 0, k = 0;
+	char* tmp = 0;
+	for (int i = 0; i < lenD; i++)
+	{
+		j = i;
+		for (int k = i; k < lenD; k++) {
+			if (strcmp(temp[j], temp[k]) > 0) {
+				j = k;
+			}
+		}
+		tmp = temp[i];
+		temp[i] = temp[j];
+		temp[j] = tmp;
+	}
+}
+
+void plusbook(book(*(&library)), int& N, string& namefile)
+{
+	ofstream fs;
+	fs.open(namefile, fstream::out | fstream::app);
+	N++;
+	char* b = new char[64];
+	char* e = new char[64];
+	char* d = new char[64];
+	char* c = new char[64];
+	char* p = new char[64];
+	char* s = new char[64];
+	int a = 0, day1 = 0, year1 = 0;
+	bool DAY1 = false, MONTH1 = false, YEAR1 = false, yearpublish = false;
+	library = (book*)realloc(library, sizeof(book) * N);
+	cout << "----------------------------------------------------------" << endl << endl;
+	cout << "Книга №" << N << endl;
+	cout << "Название книги: "; SetConsoleCP(1251); cin >> b; SetConsoleCP(866);
+	fs << b << '\n';
+	cout << "Издательство: "; SetConsoleCP(1251); cin >> e; SetConsoleCP(866);
+	fs << e << '\n';
+	while (yearpublish == false)
+	{
+		cout << "Год издания: "; cin >> a;
+		if (a <= 2021 && a > 0) yearpublish = true;
+		else { yearpublish = false; cout << "Ошибка.Некорректный ввод." << endl << endl; }
+	}
+	fs << a << '\n';
+	cout << "Имя писателя: "; SetConsoleCP(1251); cin >> c; SetConsoleCP(866);
+	fs << c << '\n';
+	cout << "Фамилия писателя: "; SetConsoleCP(1251); cin >> d; SetConsoleCP(866);
+	fs << d << '\n';
+	cout << "Отчество писателя: "; SetConsoleCP(1251); cin >> p; SetConsoleCP(866);
+	fs << p << '\n';
+	while (DAY1 == false)
+	{
+		cout << "День рождения писателя: "; cin >> day1;
+		if (day1 <= 31 && day1 > 0) DAY1 = true;
+		else { DAY1 = false; cout << "Ошибка.Некорректный ввод." << endl << endl; }
+	}
+	fs << day1 << '\n';
+	while (MONTH1 == false)
+	{
+		cout << "Месяц рождения писателя: "; SetConsoleCP(1251); cin >> s; SetConsoleCP(866);
+		if (strcmp(s, "January") == 0 || strcmp(s, "january") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "February") == 0 || strcmp(s, "february") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "March") == 0 || strcmp(s, "march") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "April") == 0 || strcmp(s, "april") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "May") == 0 || strcmp(s, "may") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "June") == 0 || strcmp(s, "june") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "July") == 0 || strcmp(s, "july") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "August") == 0 || strcmp(s, "august") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "September") == 0 || strcmp(s, "september") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "October") == 0 || strcmp(s, "october") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "November") == 0 || strcmp(s, "november") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "December") == 0 || strcmp(s, "december") == 0) { MONTH1 = true; break; }
+
+		if (strcmp(s, "Январь") == 0 || strcmp(s, "январь") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Февраль") == 0 || strcmp(s, "февраль") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Март") == 0 || strcmp(s, "март") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Апрель") == 0 || strcmp(s, "апрель") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Май") == 0 || strcmp(s, "май") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Июнь") == 0 || strcmp(s, "июнь") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Июль") == 0 || strcmp(s, "июль") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Август") == 0 || strcmp(s, "август") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Сентябрь") == 0 || strcmp(s, "сентябрь") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Октябрь") == 0 || strcmp(s, "октябрь") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Ноябрь") == 0 || strcmp(s, "ноябрь") == 0) { MONTH1 = true; break; }
+		if (strcmp(s, "Декабрь") == 0 || strcmp(s, "декабрь") == 0) { MONTH1 = true; break; }
+		else { MONTH1 = false; cout << "Ошибка.Некорректный ввод." << endl << endl; }
+	}
+	fs << s << '\n';
+	while (YEAR1 == false)
+	{
+		cout << "Год рождения писателя: "; cin >> year1;
+		if (year1 <= 2021 && year1 > 0) YEAR1 = true;
+		else { YEAR1 = false; cout << "Ошибка.Некорректный ввод." << endl << endl; }
+	}
+	fs << year1 << '\n' << '\n';
+	library[N - 1] = { b, e, a, {day1, s, year1} , {c,d,p} };
+	cout << endl;
+}
+
+void printbook(book* book, int N)
+{
+	cout << "----------------------------------------------------------" << endl << endl << "Вывод информации о книге в табличном виде: " << endl << endl;
+	cout << "Книга №" << N + 1 << endl;
+	cout << "Название книги: " << book[N].namebook << endl;
+	cout << "ФИО писателя: " << book[N].writer.surname << " " << book[N].writer.name << " " << book[N].writer.patronymic << endl;
+	cout << "Дата рождения писателя: " << book[N].date.day << " " << book[N].date.month << " " << book[N].date.yearofbirth << endl;
+	cout << "Издательство: " << book[N].pubhouse << ", опубликовано в " << book[N].publicyear << endl;
+	cout << endl;
+}
+
+void authorsbooks(char* q, char* w, char* f, book* book, int N)
+{
+	cout << "----------------------------------------------------------" << endl;
+	int u = 0;
+	for (int i = 0; i < N; i++)
+	{
+		if (strcmp(q, book[i].writer.surname) == 0 && strcmp(w, book[i].writer.name) == 0 && strcmp(f, book[i].writer.patronymic) == 0) { u++; }
+	}
+	if (u == 0) cout << "Книг интересующего вас автора в библиотеке нет" << endl << endl;
+	else
+	{
+		u = 0;
+		cout << endl << "Список книг автора: " << endl;
+		for (int i = 0; i < N; i++)
+		{
+			if (strcmp(q, book[i].writer.surname) == 0 && strcmp(w, book[i].writer.name) == 0 && strcmp(f, book[i].writer.patronymic) == 0) { u++; cout << u << ") " << book[i].namebook << endl << endl; }
+		}
+	}
+}
+
+void pubhousewriters(char* m, book* book, int N)
+{
+	cout << "----------------------------------------------------------" << endl;
+	int u = 0;
+	char** surnames1 = new char* [N];
+	for (int i = 0; i < N; i++)
+	{
+		if (strcmp(m, book[i].pubhouse) == 0) { surnames1[i] = book[i].writer.surname; u++; }
+		else surnames1[i] = NULL;
+	}
+	char** surnames2 = new char* [u]; int j = 0;
+	for (int i = 0; i < N; i++)
+	{
+		if (surnames1[i] == NULL) { j = j; }
+		else { surnames2[j] = surnames1[i]; j++; }
+	}
+	sortalfavit(surnames2, u);
+	if (u == 0) cout << "Писателей интересующего вас издательства в библиотеке нет" << endl;
+	else cout << endl << "Список фамилий писателей издательства: " << endl;
+	for (int i = 0; i < u; i++)
+	{
+		cout << i + 1 << ") " << surnames2[i] << endl;
+	}
+	delete[] surnames1;
+	delete[] surnames2;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int n = 0, x = 0;
+	bool y = true;
+	fstream fss;
+	fstream kolbook;
+	string pathfss = "library.txt";
+	string pathkol = "kolbook.txt";
+	fss.open(pathfss, fstream::out | fstream::app);
+	kolbook.open(pathkol, fstream::out | fstream::app);
+	system("color 80");
+
+	if (( !fss.is_open() ) && ( !kolbook.is_open() ))
+	{
+		cout << "Ошибка открытия файлов!" << endl;
+	}
+	else
+	{
+		cout << "Файлы открыты!" << endl;
+		fss.seekg(0, ios_base::end);		//становимся в конец файла		
+		//cout << "размер файла (в байтах): " << fss.tellg() << endl << endl;
+		kolbook.seekg(0, ios_base::end);		//становимся в конец файла		
+		//cout << "размер файла (в байтах): " << kolbook.tellg() << endl << endl;
+	}
+	
+	if ((kolbook.tellg() == 0) && (fss.tellg() == 0)) { cout << "Текстовые файлы пусты." << endl << endl << "Введите изначальное количество книг: "; cin >> n; cout << endl; }
+	else
+	{
+		cout << "В текстовых файлах содержатся данные." << endl << "Произведена инициализицаия переменных. " << endl;
+		kolbook.close();
+		kolbook.open(pathkol, fstream::in);
+		kolbook >> n; kolbook.close();
+	}
+
+	book* library = new book[n];
+	
+	if ((kolbook.tellg() == 0) && (fss.tellg() == 0))
+	{
+		for (int i = 0; i < n; i++)
+		{
+			bool  DAY1 = false, MONTH1 = false, YEAR1 = false, yearpublish = false;
+			char* b = new char[64];
+			char* e = new char[64];
+			char* d = new char[64];
+			char* c = new char[64];
+			char* p = new char[64];
+			char* s = new char[64];
+			int a = 0, day1 = 0, year1 = 0;
+			cout << "Книга №" << i + 1 << endl;
+			cout << "Название книги: "; SetConsoleCP(1251); cin >> b; SetConsoleCP(866);
+			fss << b << "\n";
+			cout << "Издательство: "; SetConsoleCP(1251); cin >> e; SetConsoleCP(866);
+			fss << e << "\n";
+			while (yearpublish == false)
+			{
+				cout << "Год издания: "; cin >> a;
+				if (a <= 2021 && a > 0) yearpublish = true;
+				else { yearpublish = false; cout << "Ошибка.Некорректный ввод." << endl << endl; }
+			}
+			fss << a << "\n";
+			cout << "Имя писателя: "; SetConsoleCP(1251); cin >> c; SetConsoleCP(866);
+			fss << c << "\n";
+			cout << "Фамилия писателя: "; SetConsoleCP(1251); cin >> d; SetConsoleCP(866);
+			fss << d << "\n";
+			cout << "Отчество писателя: "; SetConsoleCP(1251); cin >> p; SetConsoleCP(866);
+			fss << p << "\n";
+			while (DAY1 == false)
+			{
+				cout << "День рождения писателя: "; cin >> day1;
+				if (day1 <= 31 && day1 > 0) DAY1 = true;
+				else { DAY1 = false; cout << "Ошибка.Некорректный ввод." << endl << endl; }
+			}
+			fss << day1 << "\n";
+			while (MONTH1 == false)
+			{
+				cout << "Месяц рождения писателя: "; SetConsoleCP(1251); cin >> s; SetConsoleCP(866);
+				if (strcmp(s, "January") == 0 || strcmp(s, "january") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "February") == 0 || strcmp(s, "february") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "March") == 0 || strcmp(s, "march") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "April") == 0 || strcmp(s, "april") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "May") == 0 || strcmp(s, "may") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "June") == 0 || strcmp(s, "june") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "July") == 0 || strcmp(s, "july") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "August") == 0 || strcmp(s, "august") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "September") == 0 || strcmp(s, "september") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "October") == 0 || strcmp(s, "october") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "November") == 0 || strcmp(s, "november") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "December") == 0 || strcmp(s, "december") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Январь") == 0 || strcmp(s, "январь") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Февраль") == 0 || strcmp(s, "февраль") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Март") == 0 || strcmp(s, "март") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Апрель") == 0 || strcmp(s, "апрель") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Май") == 0 || strcmp(s, "май") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Июнь") == 0 || strcmp(s, "июнь") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Июль") == 0 || strcmp(s, "июль") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Август") == 0 || strcmp(s, "август") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Сентябрь") == 0 || strcmp(s, "сентябрь") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Октябрь") == 0 || strcmp(s, "октябрь") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Ноябрь") == 0 || strcmp(s, "ноябрь") == 0) { MONTH1 = true; break; }
+				if (strcmp(s, "Декабрь") == 0 || strcmp(s, "декабрь") == 0) { MONTH1 = true; break; }
+				else { MONTH1 = false; cout << "Ошибка.Некорректный ввод." << endl << endl; }
+			}
+			fss << s << "\n";
+			while (YEAR1 == false)
+			{
+				cout << "Год рождения писателя: "; cin >> year1;
+				if (year1 <= 2021 && year1 > 0) YEAR1 = true;
+				else { YEAR1 = false; cout << "Ошибка.Некорректный ввод." << endl << endl; }
+			}
+			fss << year1 << "\n" << "\n";
+			library[i] = { b, e, a, {day1, s, year1} , {c,d,p} };
+			cout << endl;
+		}
+		fss.close();
+	}
+	else
+	{
+		fss.close();
+		fss.open(pathfss, fstream::in | fstream::app);
+		for (int i = 0; i < n; i++)
+		{
+			char* buff1 = new char[64];
+			char* buff2 = new char[64];
+			char* buff3 = new char[64];
+			char* buff4 = new char[64];
+			char* buff5 = new char[64];
+			char* buff6 = new char[64];
+			int buf1 = 0, buf2 = 0, buf3 = 0;
+			fss >> buff1;
+			fss >> buff2;
+			fss >> buf1;
+			fss >> buff4;
+			fss >> buff5;
+			fss >> buff6;
+			fss >> buf2;
+			fss >> buff3;
+			fss >> buf3;
+			library[i] = { buff1,buff2, buf1, {buf2, buff3 , buf3} , {buff4, buff5, buff6} };
+		}
+		fss.close();
+	}
+
+	kolbook << n;
+	
+	do
+	{
+		cout << "----------------------------------------------------------" << endl;
+		cout << "Меню функций" << endl;
+		cout << "----------------------------------------------------------" << endl;
+		cout << "Добавить новую книгу " << "                              ......1" << endl;
+		cout << "Распечатать информацию о книге в табличном виде " << "   ......2" << endl;
+		cout << "Найти все книги автора " << "                            ......3" << endl;
+		cout << "Найти всех авторов издательства " << "                   ......4" << endl;
+		cout << "Найти всех авторов пенсионного возраста " << "           ......5" << endl;
+		cout << "Очистить данные текстовых файлов " << "                  ......6" << endl;
+		cout << "Выход из программы " << "                           ...........7" << endl;
+		int k = 0;
+		bool h;
+		char* q = new char[64];
+		char* w = new char[64];
+		char* m = new char[64];
+		char* f = new char[64];
+		cout << "----------------------------------------------------------" << endl;
+		cout << "Введите номер функции: "; cin >> x; cout << "----------------------------------------------------------" << endl << endl;
+		switch (x)
+		{
+		case 1:y = true;
+			cout << "Выбрана функция добавления новой книги в библиотеку" << endl;
+			plusbook(library, n, pathfss);
+			kolbook.open(pathkol, fstream::out | ios::trunc);
+			kolbook << n;
+			kolbook.close();
+			break;
+		case 2:y = true;
+			cout << "Выбрана функция печати информации о книге в табличном виде" << endl;
+			h = false;
+			while (h == false)
+			{
+				cout << "Введите номер интересующей вас книги: "; cin >> k; k--;
+				if (k < 0 || k >= n) cout << endl << "Ошибка. Некорректный номер книги" << endl;
+				else h = true;
+			}
+			printbook(library, k); break;
+		case 3:y = true;
+			cout << "Выбрана функция печати списка книг заданного автора" << endl;
+			cout << "Введите фамилию интересующего вас автора: "; SetConsoleCP(1251); cin >> q; SetConsoleCP(866);
+			cout << "Введите имя интересующего вас автора: "; SetConsoleCP(1251); cin >> w; SetConsoleCP(866);
+			cout << "Введите отчество интересующего вас автора: "; SetConsoleCP(1251); cin >> f; SetConsoleCP(866);
+			authorsbooks(q, w, f, library, n);
+			delete[] q;
+			delete[] f;
+			delete[] w;
+			break;
+		case 4:y = true;
+			cout << "Выбрана функция печати списка фамилий писателей заданного издательства" << endl;
+			cout << "Введите название интересующего вас издательства: "; SetConsoleCP(1251); cin >> m; SetConsoleCP(866);
+			pubhousewriters(m, library, n); cout << endl;
+			delete[] m;
+			break;
+		case 5:y = true;
+			cout << "Выбрана функция печати фамилий писателей пенсионного возраста" << endl;
+			pensionableage(library, n);
+			break;
+		case 6:y = true; 
+			cout << "Выбрана функция удаления данных из текстовых файлов" << endl;
+			kolbook.open(pathkol, fstream::out | ios::trunc); fss.open(pathfss, fstream::out | ios::trunc);
+			kolbook.close(); fss.close(); 
+			break;		
+		case 7:y = false; cout << "Программа завершила свою работу" << endl << "----------------------------------------------------------" << endl; break;
+		default: cout << "Ошибка. Некорректный номер функции" << endl; y = true;
+		}
+	} while (y == true);
+
+	kolbook.close();
+	fss.close();
+	return 0;
+}
